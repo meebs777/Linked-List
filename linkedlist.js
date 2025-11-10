@@ -99,6 +99,48 @@ export function linkedList() {
         return null;
     }
 
+    const insertAt = (value, index) => {
+        if (head === null) {
+            append(value);
+            return;
+        } 
+        if (index >= size() - 1) {
+            append(value)
+            return
+        }
+        const node = Node(value);
+        let curr = head;
+        let prev = curr;
+        for (let indx = 0; indx < index; indx++) {
+            prev = curr;
+            curr = curr.nextNode;
+        }
+        prev.nextNode = node;
+        node.nextNode = curr;
+    }
+
+    const removeAt = (index) => {
+        if (head === null) return null;
+        if (index > size() - 1) return null;
+        if ( index === size() - 1) {
+            pop();
+            return;
+        }
+        let curr = head;
+        let prev = curr;
+        if (index === 0) {
+            head = head.nextNode;
+            curr.nextNode = null;
+            return;
+        }
+        for (let indx = 0; indx < index; indx++) {
+            prev = curr;
+            curr = curr.nextNode;
+        }
+        prev.nextNode = curr.nextNode;
+        curr.nextNode = null;
+    }
+
     const toString = () => {
         let message = "";
         if (head === null) {
@@ -116,26 +158,9 @@ export function linkedList() {
     
     const headNode = () => { return head; }
     const tailNode = () => { return tail; }
-    return { headNode, append, toString, prepend, tailNode, size, pop, at, contains, find }
+    return { headNode, append, toString, prepend, tailNode, size, pop, at, contains, find, insertAt, removeAt }
 }
 
-export function Node(value = null,nextNode = null) {
+function Node(value = null,nextNode = null) {
     return {value,nextNode}
 }
-const list = linkedList();
-
-list.prepend("one");
-list.append("two")
-list.append("three")
-list.append("four")
-list.append("five")
-list.prepend("six")
-
-
-console.log(list.toString())
-console.log(list.headNode())
-console.log(list.tailNode())
-console.log(list.size())
-console.log(list.at(6))
-console.log(list.find("five"))
-
