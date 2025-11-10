@@ -1,20 +1,24 @@
 export function linkedList() {
     let head = null;
+    let tail = null;
     const append = (value) => {
         const node = Node(value);
         if (head === null) {
             head = node;
+            tail = node;
         } else if (head.nextNode === null) {
             head.nextNode = node;
+            tail = node;
         } else {
-            //Set end to point to node after head
-            let end = head.nextNode;
-            //Traverse through until at end of list with nextNode null
-            while (end.nextNode !== null) {
-                end = end.nextNode;
-            }
-            //Set end to point to new node
-            end.nextNode = node;
+            tail.nextNode = node;
+            tail = node;
+        }
+    }
+
+    const prepend = (value) => {
+        if (head === null) append(value);
+        else {
+
         }
     }
 
@@ -32,8 +36,10 @@ export function linkedList() {
         message += " null";
         return message;
     }
-
-    return{append,toString}
+    
+    const headNode = () => { return head; }
+    const tailNode = () => { return tail; }
+    return{headNode,append,toString,prepend,tailNode}
 }
 
 export function Node(value = null,nextNode = null) {
@@ -41,10 +47,13 @@ export function Node(value = null,nextNode = null) {
 }
 const list = linkedList();
 
-list.append("one");
+list.prepend("one");
 list.append("two")
 list.append("three")
 list.append("four")
 list.append("five")
+
 console.log(list.toString())
+console.log(list.headNode())
+console.log(list.tailNode())
 
